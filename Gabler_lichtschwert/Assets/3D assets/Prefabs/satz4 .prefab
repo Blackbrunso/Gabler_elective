@@ -51,7 +51,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 39e11d13d496bff4fabc50b3c6bdf44c, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
-      objectReference: {fileID: 2100000, guid: 7ea6b8ba8cae88b43a89ca0ec8b935a0, type: 2}
+      objectReference: {fileID: 2100000, guid: 09e9612a8286c424f80bec94aba4a70d, type: 2}
     - target: {fileID: 919132149155446097, guid: 39e11d13d496bff4fabc50b3c6bdf44c, type: 3}
       propertyPath: m_Name
       value: 'satz4 '

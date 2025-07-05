@@ -51,7 +51,11 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 4771207921e53834db935ea98bc53a28, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
-      objectReference: {fileID: 2100000, guid: 7ea6b8ba8cae88b43a89ca0ec8b935a0, type: 2}
+      objectReference: {fileID: 2100000, guid: 09e9612a8286c424f80bec94aba4a70d, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 4771207921e53834db935ea98bc53a28, type: 3}
+      propertyPath: 'm_Materials.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 8e6b2589f2cc402458648bcb40ed51e3, type: 2}
     - target: {fileID: 919132149155446097, guid: 4771207921e53834db935ea98bc53a28, type: 3}
       propertyPath: m_Name
       value: 'satz2 '
