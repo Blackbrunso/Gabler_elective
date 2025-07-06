@@ -4,11 +4,16 @@ public class AutoMover : MonoBehaviour
 {
     public float moveSpeed = 5f;
 
+    [Header("Lifetime Settings")]
+    public bool useLifetime = true;
     public float lifetime = 10f;
 
     private void Start()
     {
-        Destroy(gameObject, lifetime);
+        if (useLifetime)
+        {
+            Destroy(gameObject, lifetime);
+        }
     }
 
     void Update()

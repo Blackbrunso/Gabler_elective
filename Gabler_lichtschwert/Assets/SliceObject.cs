@@ -5,7 +5,8 @@ using UnityEngine.AI;
 
 public class ObjectSlicer : MonoBehaviour
 {
-    // hier das Main Tutorial
+
+    // hier das Tutorial auf dem der code basiert
     // https://www.youtube.com/watch?v=GQzW6ZJFQ94&t=847s
 
     [Header("Slicing Settings")]
@@ -35,11 +36,11 @@ public class ObjectSlicer : MonoBehaviour
 
     void Slice(GameObject target)
     {
-        // Berechne Slicegeschwindigkeit
         if (sliceReady)
         {
             lastSlicePos = endSlicePoint.position;
             sliceReady = false;
+            return;
         }
         else
         {
@@ -47,45 +48,49 @@ public class ObjectSlicer : MonoBehaviour
             sliceReady = true;
         }
 
-        // Deaktiviere NavMesh oder Animation
         if (target.TryGetComponent<NavMeshAgent>(out NavMeshAgent agent))
         {
             agent.enabled = false;
             Destroy(agent);
         }
+
         if (target.TryGetComponent<Animator>(out Animator animator))
         {
             animator.enabled = false;
         }
 
-        // Mesh vorbereiten
+        Transform meshChild = target.GetComponentInChildren<SkinnedMeshRenderer>()?.transform ??
+                              target.GetComponentInChildren<MeshFilter>()?.transform;
+
+        if (meshChild == null) return;
+
         Mesh meshToSlice = null;
         Material[] materials = null;
 
-        SkinnedMeshRenderer skinned = target.GetComponentInChildren<SkinnedMeshRenderer>();
-        if (skinned != null)
+        if (meshChild.TryGetComponent<SkinnedMeshRenderer>(out var skinned))
         {
             meshToSlice = BakeSkinnedMesh(skinned);
             materials = skinned.sharedMaterials;
         }
-        else if (target.GetComponentInChildren<MeshFilter>() != null)
+        else if (meshChild.TryGetComponent<MeshFilter>(out var mf))
         {
-            MeshFilter mf = target.GetComponentInChildren<MeshFilter>();
             meshToSlice = mf.sharedMesh;
-
-            MeshRenderer mr = mf.GetComponent<MeshRenderer>();
-            if (mr != null) materials = mr.sharedMaterials;
+            materials = meshChild.GetComponent<MeshRenderer>()?.sharedMaterials;
         }
 
         if (meshToSlice == null) return;
 
-        // Temporäres Objekt zum Schneiden erstellen
-        GameObject temp = new GameObject("TempSliceObject");
-        temp.transform.SetPositionAndRotation(target.transform.position, target.transform.rotation);
-        temp.transform.localScale = target.transform.lossyScale;
+        Vector3 localPos = meshChild.localPosition;
+        Quaternion localRot = meshChild.localRotation;
+        Vector3 localScale = meshChild.localScale;
 
-        MeshFilter tempMF = temp.AddComponent<MeshFilter>();
-        MeshRenderer tempMR = temp.AddComponent<MeshRenderer>();
+        GameObject temp = new GameObject("TempSliceObject");
+        temp.transform.position = meshChild.position;
+        temp.transform.rotation = meshChild.rotation;
+        temp.transform.localScale = meshChild.lossyScale;
+
+        var tempMF = temp.AddComponent<MeshFilter>();
+        var tempMR = temp.AddComponent<MeshRenderer>();
         tempMF.sharedMesh = meshToSlice;
         tempMR.sharedMaterials = materials;
 
@@ -97,16 +102,21 @@ public class ObjectSlicer : MonoBehaviour
             GameObject upper = hull.CreateUpperHull(temp, cutMaterial);
             GameObject lower = hull.CreateLowerHull(temp, cutMaterial);
 
-            CopyTransform(temp.transform, upper.transform);
-            CopyTransform(temp.transform, lower.transform);
+            CopyAccurateTransform(meshChild.transform, upper.transform);
+            CopyAccurateTransform(meshChild.transform, lower.transform);
+
+            upper.transform.SetParent(target.transform.parent, true);
+            lower.transform.SetParent(target.transform.parent, true);
+
 
             SetupSlicedPiece(upper);
             SetupSlicedPiece(lower);
         }
 
         Destroy(temp);
-        Destroy(target.transform.root.gameObject);
+        Destroy(target);
     }
+
 
     GameObject FindRootWithRigidbodyOrCollider(Transform t)
     {
@@ -131,18 +141,23 @@ public class ObjectSlicer : MonoBehaviour
     void SetupSlicedPiece(GameObject piece)
     {
         Rigidbody rb = piece.AddComponent<Rigidbody>();
+        rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
+
         MeshCollider mc = piece.AddComponent<MeshCollider>();
         mc.sharedMesh = piece.GetComponent<MeshFilter>().sharedMesh;
         mc.convex = true;
+        mc.inflateMesh = true;
 
         rb.AddExplosionForce(explosionForce, piece.transform.position, 1f);
         Destroy(piece, destroyAfterSeconds);
     }
 
-    void CopyTransform(Transform source, Transform destination)
+    void CopyAccurateTransform(Transform source, Transform destination)
     {
         destination.position = source.position;
         destination.rotation = source.rotation;
         destination.localScale = source.lossyScale;
     }
+
 }
