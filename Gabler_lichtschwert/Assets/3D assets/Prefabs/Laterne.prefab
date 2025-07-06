@@ -116,6 +116,7 @@ MonoBehaviour:
   moveSpeed: 0
   useLifetime: 1
   lifetime: 10
+  wert: 1
 --- !u!54 &-2686788370500136191
 Rigidbody:
   m_ObjectHideFlags: 0

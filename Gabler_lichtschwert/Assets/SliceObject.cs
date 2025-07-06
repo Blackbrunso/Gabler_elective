@@ -17,7 +17,7 @@ public class ObjectSlicer : MonoBehaviour
     [Range(0, 10000)]
     public float explosionForce = 2000f;
     public float destroyAfterSeconds = 10f;
-
+    public int point;
     private bool sliceReady = true;
     private Vector3 lastSlicePos = Vector3.zero;
     private Vector3 sliceVelocity;
@@ -29,6 +29,8 @@ public class ObjectSlicer : MonoBehaviour
             GameObject target = FindRootWithRigidbodyOrCollider(hit.transform);
             if (target != null)
             {
+                
+                   
                 Slice(target);
             }
         }
@@ -113,6 +115,12 @@ public class ObjectSlicer : MonoBehaviour
             SetupSlicedPiece(lower);
         }
 
+        if (target.GetComponent<AutoMover>() != null)
+        {
+            AutoMover punkte = target.GetComponent<AutoMover>();
+            Points(punkte.wert);
+        }
+
         Destroy(temp);
         Destroy(target);
     }
@@ -158,6 +166,10 @@ public class ObjectSlicer : MonoBehaviour
         destination.position = source.position;
         destination.rotation = source.rotation;
         destination.localScale = source.lossyScale;
+    }
+    public void Points(int x)
+    {
+        point += x;
     }
 
 }

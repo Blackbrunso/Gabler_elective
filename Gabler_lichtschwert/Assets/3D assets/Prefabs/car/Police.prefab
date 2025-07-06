@@ -5050,6 +5050,7 @@ MonoBehaviour:
   moveSpeed: 2
   useLifetime: 1
   lifetime: 10
+  wert: 5
 --- !u!4 &702445951807480545 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 83152b7470c5a48469825c98fc94d403, type: 3}

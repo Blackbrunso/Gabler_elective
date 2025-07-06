@@ -7,6 +7,7 @@ public class AutoMover : MonoBehaviour
     [Header("Lifetime Settings")]
     public bool useLifetime = true;
     public float lifetime = 10f;
+    public int wert;
 
     private void Start()
     {

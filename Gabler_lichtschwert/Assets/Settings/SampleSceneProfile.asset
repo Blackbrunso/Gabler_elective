@@ -292,7 +292,7 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 1
   bladeRotation:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: -180
 --- !u!114 &7391319092446245454
 MonoBehaviour:

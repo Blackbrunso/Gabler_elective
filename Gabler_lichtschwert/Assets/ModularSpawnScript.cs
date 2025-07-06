@@ -1,7 +1,16 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class SpawnerManager : MonoBehaviour
 {
+    [System.Serializable]
+    public class WeightedPrefab
+    {
+        public GameObject prefab;
+        [Range(0f, 1f)]
+        public float spawnChance = 1f;
+    }
+
     [System.Serializable]
     public class SpawnGroup
     {
@@ -9,12 +18,12 @@ public class SpawnerManager : MonoBehaviour
 
         [Header("Spawning Setup")]
         public Transform[] spawners;
-        public GameObject[] spawnPrefabs;
+        public List<WeightedPrefab> weightedPrefabs;
 
         [Header("Timing")]
         public bool useRandomInterval = false;
-        public float spawnInterval = 2f;        // Festes Intervall
-        public float minInterval = 1f;          // Für zufälliges Spawning
+        public float spawnInterval = 2f;
+        public float minInterval = 1f;
         public float maxInterval = 5f;
 
         private float timer;
@@ -34,19 +43,45 @@ public class SpawnerManager : MonoBehaviour
                 timer = 0f;
                 Spawn();
 
-                // Nächstes Intervall festlegen
                 currentInterval = useRandomInterval ? Random.Range(minInterval, maxInterval) : spawnInterval;
             }
         }
 
         private void Spawn()
         {
-            if (spawners.Length == 0 || spawnPrefabs.Length == 0) return;
+            if (spawners.Length == 0 || weightedPrefabs.Count == 0) return;
 
             Transform spawnPoint = spawners[Random.Range(0, spawners.Length)];
-            GameObject prefab = spawnPrefabs[Random.Range(0, spawnPrefabs.Length)];
+            GameObject selectedPrefab = GetRandomWeightedPrefab();
 
-            GameObject.Instantiate(prefab, spawnPoint.position, spawnPoint.rotation);
+            if (selectedPrefab != null)
+            {
+                GameObject.Instantiate(selectedPrefab, spawnPoint.position, spawnPoint.rotation);
+            }
+        }
+
+        private GameObject GetRandomWeightedPrefab()
+        {
+            float totalWeight = 0f;
+            foreach (var wp in weightedPrefabs)
+            {
+                totalWeight += wp.spawnChance;
+            }
+
+            float randomValue = Random.value * totalWeight;
+            float cumulativeWeight = 0f;
+
+            foreach (var wp in weightedPrefabs)
+            {
+                cumulativeWeight += wp.spawnChance;
+                if (randomValue <= cumulativeWeight)
+                {
+                    return wp.prefab;
+                }
+            }
+
+            // Fallback (shouldn’t happen unless weights are all zero)
+            return null;
         }
     }
 

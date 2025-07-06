@@ -6,10 +6,15 @@ public class GetCaught : MonoBehaviour
     public GameObject policePrefab;            // Das Prefab, das gespawnt werden soll
     public Transform[] spawnPoints;            // Drei Spawnpunkte
 
+    
+
     [Header("Limit Settings")]
     public int maxSpawns = 3;                  // Nach 3x ist es vorbei
 
     private int policeSpawnCount = 0;          // Wie oft Polizei gespawnt wurde
+
+    
+    public bool busted;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -17,6 +22,7 @@ public class GetCaught : MonoBehaviour
 
         if (policeSpawnCount >= maxSpawns)
         {
+            busted = true;
             Debug.Log("Zu oft erwischt! Game Over oder andere Aktion.");
             return;
         }
@@ -25,12 +31,19 @@ public class GetCaught : MonoBehaviour
         {
             Transform spawnTransform = spawnPoints[policeSpawnCount];
 
-            // Spawnen und direkt als Kind setzen
             GameObject clone = Instantiate(policePrefab, spawnTransform.position, spawnTransform.rotation);
-            clone.transform.SetParent(spawnTransform); // ← Verknüpft den Spawn mit dem Spawnpunkt
+            clone.transform.SetParent(spawnTransform);
+
+            SpawnerMover mover = spawnTransform.GetComponent<SpawnerMover>();
+            if (mover != null)
+            {
+                mover.SlideIn();
+            }
 
             policeSpawnCount++;
         }
+
+
         else
         {
             Debug.LogWarning("PolicePrefab oder SpawnPoint fehlt!");

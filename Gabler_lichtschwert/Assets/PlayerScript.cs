@@ -1,17 +1,48 @@
+using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 5f;
-    public float radius = 2f;
-    public float rotationSpeed = 90f; 
-    public Transform targetObject;
-    public ConnectArduino bluetoothReceiver; 
+    public float speed = 5f;                // Aktuelle Geschwindigkeit
+    private float zielspeed;               // Zielgeschwindigkeit
+    public float maxSpeed = 10f;           // Obergrenze der Geschwindigkeit
+    public float acceleration = 0.5f;      // Wie schnell man schneller wird
 
-    private float smoothedValue = 0.5f; 
-    private float manualAngleOffset = 0f; 
+    public float radius = 2f;
+    public float rotationSpeed = 90f;
+    public Transform targetObject;
+    public ConnectArduino bluetoothReceiver;
+    private bool busted= false;
+    private float smoothedValue = 0.5f;
+    private float manualAngleOffset = 0f;
+
+    private void Start()
+    {
+        zielspeed = speed;
+    }
+
     void Update()
     {
+        // Automatisch beschleunigen, aber nicht über maxSpeed
+        if (speed < maxSpeed)
+        {
+            speed += acceleration * Time.deltaTime;
+            speed = Mathf.Min(speed, maxSpeed); // Begrenzung auf maxSpeed
+        }
+
+        if(busted)
+        {
+            if (zielspeed < speed)
+            {
+                speed -= 1f * Time.deltaTime;
+            }
+            else if (zielspeed > speed)
+            {
+                speed += 1f * Time.deltaTime;
+            }
+        }
+        
+
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
 
         if (bluetoothReceiver != null && targetObject != null)
@@ -23,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
                 input = 1f;
 
             manualAngleOffset += input * rotationSpeed * Time.deltaTime;
-            manualAngleOffset = Mathf.Clamp(manualAngleOffset, -90f, 90f); 
+            manualAngleOffset = Mathf.Clamp(manualAngleOffset, -90f, 90f);
 
             float rawValue = bluetoothReceiver.RotationValue;
             smoothedValue = Mathf.Lerp(smoothedValue, rawValue, Time.deltaTime * 5f);
@@ -33,8 +64,8 @@ public class PlayerMovement : MonoBehaviour
             float angleRad = angleDeg * Mathf.Deg2Rad;
 
             Vector3 offset = new Vector3(
-                Mathf.Sin(angleRad),   // X-Achse
-                Mathf.Cos(angleRad),   // Y-Achse
+                Mathf.Sin(angleRad),
+                Mathf.Cos(angleRad),
                 0f
             ) * radius;
 
@@ -49,5 +80,11 @@ public class PlayerMovement : MonoBehaviour
                 Time.deltaTime * 5f
             );
         }
+    }
+
+    public void SetSpeed(float x)
+    {
+        busted = true;
+        zielspeed = Mathf.Clamp(x, 0f, maxSpeed); // optional: absichern
     }
 }

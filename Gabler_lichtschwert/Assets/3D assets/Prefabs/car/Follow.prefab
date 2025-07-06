@@ -4919,7 +4919,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -2040254050740271484, guid: 83152b7470c5a48469825c98fc94d403, type: 3}
       propertyPath: m_TagString
-      value: Police
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: -75103027602457738, guid: 83152b7470c5a48469825c98fc94d403, type: 3}
       propertyPath: m_Layer
@@ -4943,7 +4943,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 83152b7470c5a48469825c98fc94d403, type: 3}
       propertyPath: m_TagString
-      value: Police
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 3572447281088800331, guid: 83152b7470c5a48469825c98fc94d403, type: 3}
       propertyPath: m_Layer
@@ -4996,7 +4996,7 @@ Animator:
   m_GameObject: {fileID: 212872544508000347}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 55cca825c25a48c40bc813ccab112716, type: 2}
+  m_Controller: {fileID: 9100000, guid: 11aa3916aa4a29c4688c22aa9cb53e21, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
