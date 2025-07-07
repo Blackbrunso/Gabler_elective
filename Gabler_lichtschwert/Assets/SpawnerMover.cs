@@ -2,33 +2,26 @@
 
 public class SpawnerMover : MonoBehaviour
 {
-    public float moveDistance = 0.5f;   // Sinus-Verschiebung auf Z-Achse
-    public float moveSpeed = 1f;        // Sinus-Geschwindigkeit
-    public float slideSpeed = 2f;       // Geschwindigkeit zum Einschieben
+    public float moveDistance = 0.5f;
+    public float moveSpeed = 1f;
+    public float slideSpeed = 2f;
+    public GameObject targetCenter;
 
-    public GameObject targetCenter;     // Zielobjekt für die Position
-
-    private float startZ;               // Start Z außerhalb (z.B. Ziel.z - 10)
-    private bool isSlidingIn = false;   // Flag, ob gerade eingeschoben wird
+    private float startZ;
+    private bool isSlidingIn = false;
     private float randomOffset;
     private bool arrived = false;
+    private float slideStartZ;
 
     void Start()
     {
         if (targetCenter == null)
         {
-            Debug.LogError("Bitte targetCenter zuweisen!");
             enabled = false;
             return;
         }
 
-        // Startposition auf Z 10 Einheiten hinter dem Ziel
         startZ = targetCenter.transform.position.z - 10f;
-
-        
-       
-        
-
         randomOffset = Random.Range(0f, Mathf.PI * 2f);
     }
 
@@ -41,7 +34,6 @@ public class SpawnerMover : MonoBehaviour
 
         if (isSlidingIn)
         {
-            // Langsam auf Ziel-Z fahren, X,Y bleiben gleich
             pos.z = Mathf.MoveTowards(pos.z, targetPos.z, slideSpeed * Time.deltaTime);
             transform.position = pos;
 
@@ -55,16 +47,15 @@ public class SpawnerMover : MonoBehaviour
         }
         else if (arrived)
         {
-            // Sinusbewegung auf Z um targetPos.z
             float offset = Mathf.Sin(Time.time * moveSpeed + randomOffset) * moveDistance;
             pos.z = targetPos.z + offset;
             transform.position = pos;
         }
     }
 
-    // Aufruf wenn Auto gespawnt wurde und der Spawnpunkt reinrutschen soll
     public void SlideIn()
     {
         isSlidingIn = true;
+        slideStartZ = transform.position.z;
     }
 }

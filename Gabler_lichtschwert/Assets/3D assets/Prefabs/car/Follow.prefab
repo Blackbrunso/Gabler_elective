@@ -5073,7 +5073,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blue: {fileID: 2100000, guid: 0c6a203559415c44ebf25ce87ca96d6c, type: 2}
   red: {fileID: 2100000, guid: 3da1478b796ee7b4691b4abf2000d729, type: 2}
-  intervall: 1
+  interval: 0.5
 --- !u!4 &702445951807480545 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 83152b7470c5a48469825c98fc94d403, type: 3}

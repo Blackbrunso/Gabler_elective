@@ -24,7 +24,7 @@ public class PoliceRam : MonoBehaviour
         Animator anim = rb.GetComponent<Animator>();
         if (anim != null && rb.gameObject != gameObject && !rb.transform.IsChildOf(transform))
         {
-            anim.enabled = false;
+            //anim.enabled = false;
         }
 
 

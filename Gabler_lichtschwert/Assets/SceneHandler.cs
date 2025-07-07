@@ -1,6 +1,6 @@
 using TMPro;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class SceneHandler : MonoBehaviour
 {
     [Header("UI")]
@@ -38,6 +38,10 @@ public class SceneHandler : MonoBehaviour
             finalscore.text = "Points: " + Os.point;
         }
     }
-
+    public void RestartScene()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
+    }
 
 }

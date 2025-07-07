@@ -2,6 +2,8 @@ using System.Collections;
 using UnityEngine;
 using EzySlice;
 using UnityEngine.AI;
+using NUnit.Framework.Internal;
+using TMPro;
 
 public class ObjectSlicer : MonoBehaviour
 {
@@ -21,7 +23,13 @@ public class ObjectSlicer : MonoBehaviour
     private bool sliceReady = true;
     private Vector3 lastSlicePos = Vector3.zero;
     private Vector3 sliceVelocity;
+    private SaberAudio sA;
+    public GameObject add;
 
+    private void Start()
+    {
+        sA = GetComponent<SaberAudio>();
+    }
     void FixedUpdate()
     {
         if (Physics.Linecast(startSlicePoint.position, endSlicePoint.position, out RaycastHit hit, sliceableLayer))
@@ -119,7 +127,27 @@ public class ObjectSlicer : MonoBehaviour
         {
             AutoMover punkte = target.GetComponent<AutoMover>();
             Points(punkte.wert);
+
+            // --- Instantiate 'add' UI ---
+            GameObject instance = Instantiate(add, target.transform.position, Quaternion.identity);
+
+            TextMeshPro textComponent = instance.GetComponent<TextMeshPro>();
+
+
+            if (textComponent != null)
+            {
+                textComponent.text = "+" + punkte.wert.ToString();
+            }
+            else
+            {
+                Debug.LogWarning("Kein TextMeshPro auf dem Prefab gefunden!");
+            }
+
+
+
         }
+
+        sA.PlayRandomClip();
 
         Destroy(temp);
         Destroy(target);
