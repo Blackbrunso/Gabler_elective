@@ -6,16 +6,18 @@ public class SceneHandler : MonoBehaviour
     [Header("UI")]
     public GameObject bust;
     public TextMeshProUGUI score;
+    public TextMeshProUGUI finalscore;
     [Header("PlayerMovement")]
     public PlayerMovement pM;
     [Header("GetCaught")]
     public GetCaught gC;
     [Header("Spawner")]
     public SpawnerManager sM;
+    public float spawnrate;
     [Header("SliceObjects")]
     public ObjectSlicer Os;
     
-    public float spawnrate;
+    
 
     private void Update()
     {
@@ -33,6 +35,7 @@ public class SceneHandler : MonoBehaviour
                 sM.streetGroup.maxInterval -= spawnrate * Time.deltaTime;
             }
             score.text = "Score: " + Os.point;
+            finalscore.text = "Points: " + Os.point;
         }
     }
 
