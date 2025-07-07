@@ -3,24 +3,24 @@ using UnityEngine;
 
 public class EndlessRoad : MonoBehaviour
 {
-    public GameObject[] roadPrefabs;          // Deine 5 Road-Prefabs
-    public Transform player;                  // Die Position, die sich vorwärts bewegt (z. B. Kamera oder Spieler)
-    public float roadLength = 10f;            // Die Länge eines Road-Prefabs
-    public int numberOfRoadsOnScreen = 5;     // Wie viele Road-Chunks sichtbar bleiben
-    private float spawnZ = 0.0f;              // Wo der nächste Road-Chunk gespawnt wird
+    public GameObject[] roadPrefabs;         
+    public Transform player;                  
+    public float roadLength = 10f;            
+    public int numberOfRoadsOnScreen = 5;     
+    private float spawnZ = 0.0f;             
     private List<GameObject> activeRoads = new List<GameObject>();
 
     void Start()
     {
         for (int i = 0; i < numberOfRoadsOnScreen; i++)
         {
-            SpawnRoad(i < 2 ? 0 : -1); // Die ersten paar sind immer gleich, danach random
+            SpawnRoad(i < 2 ? 0 : -1); 
         }
     }
 
     void Update()
     {
-        // Sobald der Player nahe genug am nächsten Spawnpunkt ist, eine neue Straße hinzufügen
+        
         if (player.position.z - 20 > spawnZ - numberOfRoadsOnScreen * roadLength)
         {
             SpawnRoad();

@@ -19,7 +19,6 @@ public class AutoMover : MonoBehaviour
 
     void Update()
     {
-        // Bewegung nach vorne relativ zur Objektrotation
         transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
     }
 }

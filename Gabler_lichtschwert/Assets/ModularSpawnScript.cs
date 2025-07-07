@@ -80,7 +80,6 @@ public class SpawnerManager : MonoBehaviour
                 }
             }
 
-            // Fallback (shouldn’t happen unless weights are all zero)
             return null;
         }
     }

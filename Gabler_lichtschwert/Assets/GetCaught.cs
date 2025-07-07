@@ -3,15 +3,15 @@
 public class GetCaught : MonoBehaviour
 {
     [Header("Spawning")]
-    public GameObject policePrefab;            // Das Prefab, das gespawnt werden soll
-    public Transform[] spawnPoints;            // Drei Spawnpunkte
+    public GameObject policePrefab;            
+    public Transform[] spawnPoints;           
 
     
 
     [Header("Limit Settings")]
-    public int maxSpawns = 3;                  // Nach 3x ist es vorbei
+    public int maxSpawns = 3;                  
 
-    private int policeSpawnCount = 0;          // Wie oft Polizei gespawnt wurde
+    private int policeSpawnCount = 0;          
 
     
     public bool busted;

@@ -36,16 +36,14 @@ public class PoliceRam : MonoBehaviour
             rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
         }
 
-        // Kraft-Richtung berechnen: schräg nach oben + zufällige seitliche Richtung
         Vector3 direction = transform.forward * 0.8f + Vector3.up * 0.5f;
 
-        // Zufällige links/rechts-Komponente hinzufügen
-        float side = Random.Range(-1f, 1f); // -1 = links, 1 = rechts
+       
+        float side = Random.Range(-1f, 1f); 
         direction += transform.right * side * 0.5f;
 
-        direction.Normalize(); // sicherstellen, dass die Richtung eine Länge von 1 hat
+        direction.Normalize(); 
 
-        // Kraft anwenden
         rb.AddForce(direction * ramForce, ForceMode.Impulse);
 
     }

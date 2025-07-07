@@ -3,11 +3,10 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 5f;                // Aktuelle Geschwindigkeit
-    private float zielspeed;               // Zielgeschwindigkeit
-    public float maxSpeed = 10f;           // Obergrenze der Geschwindigkeit
-    public float acceleration = 0.5f;      // Wie schnell man schneller wird
-
+    public float speed = 5f;               
+    private float zielspeed;               
+    public float maxSpeed = 10f;           
+    public float acceleration = 0.5f;      
     public float radius = 2f;
     public float rotationSpeed = 90f;
     public Transform targetObject;
@@ -23,11 +22,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        // Automatisch beschleunigen, aber nicht über maxSpeed
         if (speed < maxSpeed)
         {
             speed += acceleration * Time.deltaTime;
-            speed = Mathf.Min(speed, maxSpeed); // Begrenzung auf maxSpeed
+            speed = Mathf.Min(speed, maxSpeed); 
         }
 
         if(busted)
@@ -85,6 +83,6 @@ public class PlayerMovement : MonoBehaviour
     public void SetSpeed(float x)
     {
         busted = true;
-        zielspeed = Mathf.Clamp(x, 0f, maxSpeed); // optional: absichern
+        zielspeed = Mathf.Clamp(x, 0f, maxSpeed); 
     }
 }
