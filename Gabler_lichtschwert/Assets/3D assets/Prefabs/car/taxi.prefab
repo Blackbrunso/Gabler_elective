@@ -5045,7 +5045,7 @@ MonoBehaviour:
   moveSpeed: 1
   useLifetime: 1
   lifetime: 10
-  wert: 1
+  wert: 2
 --- !u!82 &-8980549578606313508
 AudioSource:
   m_ObjectHideFlags: 0
