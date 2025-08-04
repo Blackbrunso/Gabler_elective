@@ -5,6 +5,7 @@ using ArduinoBluetoothAPI;
 using System;
 using System.Globalization;
 using TMPro;
+using System.Drawing;
 
 public class ConnectArduino : MonoBehaviour
 {
@@ -12,6 +13,10 @@ public class ConnectArduino : MonoBehaviour
     public string deviceName = "HC-05";
     private string received_message;
     public float RotationValue { get; private set; } = 0.5f;
+    
+    public ObjectSlicer oS;
+    private float timer;
+    private float intervall = 0.05f;
 
     // Start is called before the first frame update
     void Start()
@@ -55,7 +60,15 @@ public class ConnectArduino : MonoBehaviour
 
                 Debug.Log(received_message);
             }*/
+        timer += Time.deltaTime;
+        if(timer > intervall)
+        {
+            sendData(oS.point.ToString());
+            timer = 0;
+        }
     }
+
+    
 
     void OnMessageReceived(BluetoothHelper helper)
     {

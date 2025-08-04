@@ -26,6 +26,9 @@ public class ObjectSlicer : MonoBehaviour
     private SaberAudio sA;
     public GameObject add;
 
+    [Header("ardourino")]
+    public ConnectArduino cA;
+
     private void Start()
     {
         sA = GetComponent<SaberAudio>();
@@ -136,6 +139,7 @@ public class ObjectSlicer : MonoBehaviour
 
             if (textComponent != null)
             {
+                
                 textComponent.text = "+" + punkte.wert.ToString();
             }
             else
@@ -146,9 +150,9 @@ public class ObjectSlicer : MonoBehaviour
 
 
         }
-
+        
         sA.PlayRandomClip();
-
+        
         Destroy(temp);
         Destroy(target);
     }

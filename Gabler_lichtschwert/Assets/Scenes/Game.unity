@@ -3543,8 +3543,9 @@ GameObject:
   - component: {fileID: 1719694464}
   - component: {fileID: 1719694463}
   - component: {fileID: 1719694462}
+  - component: {fileID: 1719694465}
   m_Layer: 0
-  m_Name: "empf\xE4nger"
+  m_Name: "empf\xE4nger/Sender"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3563,6 +3564,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deviceName: HC-05
+  oS: {fileID: 664112934706898640}
 --- !u!114 &1719694463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3590,6 +3592,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1719694465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1719694461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd0fde74d740e0e4e8a32734cb9b4cd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  score: {fileID: 664112934706898640}
 --- !u!1 &1722253250
 GameObject:
   m_ObjectHideFlags: 0
@@ -4359,6 +4374,10 @@ PrefabInstance:
       propertyPath: saberRootObject
       value: 
       objectReference: {fileID: 6655375798090876263}
+    - target: {fileID: 952024991284058456, guid: de34d596d0cff7c4094b339455e11fb5, type: 3}
+      propertyPath: cA
+      value: 
+      objectReference: {fileID: 1719694462}
     - target: {fileID: 952024991284058456, guid: de34d596d0cff7c4094b339455e11fb5, type: 3}
       propertyPath: add
       value: 
